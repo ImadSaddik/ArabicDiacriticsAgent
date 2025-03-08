@@ -13,7 +13,7 @@ class DiacriticsReviewer:
         load_dotenv()
 
         self.client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-        self.model = "gemini-2.0-pro-exp-02-05"
+        self.model = "gemini-2.0-flash-lite"
         self.system_prompt = self._get_system_prompt()
         self.diacritized_text = diacritized_text
 
