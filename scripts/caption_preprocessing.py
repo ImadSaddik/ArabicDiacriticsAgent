@@ -13,16 +13,16 @@ class CaptionPreProcessor:
         self.client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
         self.model = "gemini-2.0-pro-exp-02-05"
         self.system_prompt = self._get_system_prompt()
-        self.user_query = self._get_user_query()
         self.raw_captions = raw_captions
+        self.user_query = self._get_user_query()
 
-    def process_captions(self, system_prompt: str, query: str) -> str:
+    def process_captions(self) -> str:
         response = self.client.models.generate_content(
             model=self.model,
-            contents=query,
+            contents=self.user_query,
             config=GenerateContentConfig(
                 system_instruction=[
-                    system_prompt
+                    self.system_prompt
                 ]
             )
         )
