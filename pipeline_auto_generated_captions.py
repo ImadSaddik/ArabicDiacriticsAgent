@@ -1,3 +1,4 @@
+import os
 import json
 import time
 
@@ -73,11 +74,26 @@ class Pipeline:
             "video_url": self.video_url,
             "diacritized_text": self.diacritized_text
         }
+        file_path = "output.json"
         try:
-            with open("output.json", "a", encoding="utf-8") as file:
-                json.dump(output_data, file, ensure_ascii=False, indent=4)
-                file.write("\n")
-            print("Diacritized text saved to output.json.")
+            data = []
+            if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
+                with open(file_path, "r", encoding="utf-8") as file:
+                    try:
+                        data = json.load(file)
+                    except json.JSONDecodeError:
+                        print(
+                            "Warning: Existing file is not valid JSON. Creating a new list.")
+                        data = []
+
+            if not isinstance(data, list):
+                data = []
+
+            data.append(output_data)
+            with open(file_path, "w", encoding="utf-8") as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+
+            print("Diacritized text appended to output.json.")
         except Exception as e:
             print(f"Error saving to JSON: {e}")
 
