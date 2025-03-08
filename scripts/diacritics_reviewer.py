@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai.types import GenerateContentConfig
 
+from scripts.utils import parse_json_output
+
 
 class DiacriticsReviewer:
     def __init__(self, diacritized_text: str) -> None:
@@ -15,7 +17,7 @@ class DiacriticsReviewer:
         self.system_prompt = self._get_system_prompt()
         self.diacritized_text = diacritized_text
 
-    def process_captions(self) -> str:
+    def review_text(self) -> str:
         response = self.client.models.generate_content(
             model=self.model,
             contents=self.diacritized_text,
@@ -25,7 +27,9 @@ class DiacriticsReviewer:
                 ]
             )
         )
-        return response.text
+        json_str = response.text
+        decision = parse_json_output(json_str=json_str)
+        return decision
 
     def _get_system_prompt(self) -> str:
         return """You are an expert in Arabic linguistics with a strong command of grammar, syntax, and diacritics. Your task is to evaluate the diacritized Arabic text provided from the previous step, ensuring the diacritics are applied correctly and appropriately based on the context of each sentence.
