@@ -1,4 +1,5 @@
 import json
+import time
 
 from scripts.add_diacritics_to_text import DiacriticAdder
 from scripts.diacritics_reviewer import DiacriticsReviewer
@@ -36,12 +37,16 @@ class Pipeline:
         caption_preprocessor = CaptionPreProcessor(self.captions)
         self.captions = caption_preprocessor.process_captions()
         print("Captions preprocessing completed.")
+        print("Sleeping for 60 seconds to allow for any potential API rate limits...")
+        time.sleep(60)
 
         # Step 3: Add diacritics
         print("Step 3: Adding diacritics to the text...")
         diacritic_adder = DiacriticAdder(self.captions)
         self.diacritized_text = diacritic_adder.add_diacritics()
         print("Diacritics added successfully.")
+        print("Sleeping for 60 seconds to allow for any potential API rate limits...")
+        time.sleep(60)
 
         # Step 4: Review diacritics
         print("Step 4: Reviewing diacritics ...")
@@ -55,7 +60,12 @@ class Pipeline:
             else:
                 print("Diacritics review failed, retrying...")
                 self.diacritized_text = diacritic_adder.add_diacritics()
+                print(
+                    "Sleeping for 60 seconds to allow for any potential API rate limits...")
+                time.sleep(60)
 
+        # Step 5: Save diacritized text to JSON file
+        self.save_to_json()
         print("Pipeline execution completed.")
 
     def save_to_json(self):
