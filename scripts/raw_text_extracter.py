@@ -1,7 +1,7 @@
 import torch
+import whisper
 
 from pytubefix import YouTube
-from transformers import pipeline
 
 
 class YouTubeArabicCaptionExtractor:
@@ -21,18 +21,12 @@ class YouTubeArabicCaptionExtractor:
 class WhisperArabicCaptionExtractor:
     def __init__(self, video_url: str) -> None:
         self.video_url = video_url
+        self.model = whisper.load_model('turbo')
 
     def extract_captions(self) -> str:
-        model_id = "openai/whisper-large-v3-turbo"
-        pipe = pipeline(
-            "automatic-speech-recognition",
-            model=model_id,
-            torch_dtype=torch.float16,
-            device="cuda"
-        )
-
         self.download_audio_from_youtube(self.video_url)
-        result = pipe("../audio/audio.mp3", return_timestamps=True)
+        result = self.model.transcribe(
+            audio="../audio/audio.mp3", language="ar")
         captions_text = result["text"]
         return captions_text
 
