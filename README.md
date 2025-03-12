@@ -1,6 +1,6 @@
 # Arabic diacritics agent
 
-Training text to speech models on the Arabic language can be challenging. In Arabic, we have something called diacritics, these are symbols like fatha ( َ ), damma ( ُ ), kasra ( ِ ), and sukoon ( ْ ) that are placed above or below letters to indicate pronunciation.
+Training text to speech models on the Arabic language can be challenging. In Arabic, we have something called diacritics, these are symbols like fatha, damma, kasra, and sukoon that are placed above or below letters to indicate pronunciation.
 
 Unlike many other languages, Arabic writing typically omits these diacritics in everyday texts, which can create ambiguity in pronunciation and meaning. This poses a significant challenge for training text-to-speech (TTS) models, as they rely on accurate phonetic representations to produce natural-sounding speech.
 
