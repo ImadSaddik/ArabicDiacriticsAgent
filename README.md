@@ -4,7 +4,7 @@ Training text to speech models on the Arabic language can be challenging. In Ara
 
 Unlike many other languages, Arabic writing typically omits these diacritics in everyday texts, which can create ambiguity in pronunciation and meaning. This poses a significant challenge for training text-to-speech (TTS) models, as they rely on accurate phonetic representations to produce natural-sounding speech.
 
-This is why I decided to create this agent to help diacritize raw Arabic text in order to enrich TTS models and improve their quality.
+That's why I created this agent to add diacritics to raw Arabic text and make TTS models more accurate.
 
 ## The challenge of diacritic restoration  
 
